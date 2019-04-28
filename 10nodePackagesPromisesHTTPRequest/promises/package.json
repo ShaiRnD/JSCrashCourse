@@ -1,0 +1,15 @@
+{
+  "name": "promises",
+  "version": "1.0.0",
+  "description": "HTTP requests, Promises",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ShaiR&D",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.3.0",
+    "request": "^2.88.0"
+  }
+}
