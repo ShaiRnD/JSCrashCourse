@@ -30,6 +30,6 @@
     * `git commit -am "comment"` - only adds tracked files to staging area
 * `git status`
 * `git log` (:q to quit)
-* `git checkout <hash> .` - will checkout the commit
+* `git checkout <hash> .` - will checkout the commit (`git checkout master` to return to regular state)
 * `git checkout -b <branch_name>` - creates a branch and checks it out
 * `git branch <branch_name>` - create a branch without checkout
