@@ -28,7 +28,8 @@ Take time to try these shortcuts, pick a few at a time and use them until they b
 `Ctrl + plus/minus` - enlarge/shrink page  
 `Ctrl + 0` - return to 100% page size  
 `Ctrl + R` - refresh\
-`Ctrl + Shift + R` - refresh without cache
+`Ctrl + Shift + R` - refresh without cache\
+`Alt + F, X` - close all chrome windows
 
 #### Debugging
 `F8` - continue  
@@ -60,4 +61,4 @@ Take time to try these shortcuts, pick a few at a time and use them until they b
 `Ctrl + B` - toggle sidebar\
 `Ctrl + Shift + E` - Focus on sidebar explorer\
 `Ctrl + 1|2|3|4` - focus on code pane\
-`Ctrl + K V` - open preview (for Markdown)
+`Ctrl + K V` - open preview (for Markdown), After installing Quakka needs to fix manually
