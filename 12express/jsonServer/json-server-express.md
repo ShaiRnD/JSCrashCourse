@@ -26,11 +26,10 @@ Post object will look like this:
 
 Add the *posts* endpoint
 
-GET /posts - returns all the posts [{id, userId, text},{},...]
-GET /users/:id/posts - returns all the posts for the user with that id
-GET /posts/:id - returns the post with that id
-
-POST /users/:id - creates a new post for the user with the specified id. the post id should be sequential to all posts (not user unique)
+GET /posts - returns all the posts `[{id, userId, text},{},...]`\
+GET /users/:id/posts - returns all the posts for the user with that id\
+GET /posts/:id - returns the post with that id\
+POST /users/:id/posts  - creates a new post for the user with the specified id. the post id should be sequential to all posts (not user unique)
 
 ## Step 3
 
