@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Link to datacharmer/test_db: A sample MySQL database with an integrated test suite, used to test your applications and database servers
+Type=Link
+URL=https://github.com/datacharmer/test_db
+Icon=text-html
