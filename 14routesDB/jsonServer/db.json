@@ -1,0 +1,28 @@
+{
+  "posts": [
+    {
+      "id": 0,
+      "userId": "2",
+      "text": "yep!"
+    },
+    {
+      "id": 1,
+      "userId": "2",
+      "text": "yep!"
+    }
+  ],
+  "users": [
+    {
+      "id": 0,
+      "name": "shai"
+    },
+    {
+      "id": 1,
+      "name": "shai"
+    },
+    {
+      "id": 2,
+      "name": "shai"
+    }
+  ]
+}

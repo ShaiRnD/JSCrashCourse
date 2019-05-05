@@ -1,7 +1,4 @@
 'use strict';
-
-// This project uses routes altough not learned yet in the course, if all the routing is in this file it is OK!
-
 const express = require('express');
 const posts = require('./routes/posts');
 const users = require('./routes/users');
