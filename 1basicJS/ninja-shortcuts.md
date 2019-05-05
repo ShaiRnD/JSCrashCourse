@@ -59,6 +59,7 @@ Take time to try these shortcuts, pick a few at a time and use them until they b
 `Ctrl + ~` - open/close terminal\
 `Ctrl + Shift + ~` - open another terminal\
 `Ctrl + B` - toggle sidebar\
+`Ctrl + J` - toggle panel\
 `Ctrl + Shift + E` - Focus on sidebar explorer\
 `Ctrl + 1|2|3|4` - focus on code pane\
 `Ctrl + K V` - open preview (for Markdown), After installing Quakka needs to fix manually
