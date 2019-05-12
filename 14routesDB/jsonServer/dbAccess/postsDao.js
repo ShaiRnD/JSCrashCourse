@@ -1,5 +1,5 @@
 'use strict';
-const queryDB = require('./dbAccess');
+const {queryDB} = require('./dbAccess');
 
 function getPosts(cb){
     queryDB('SELECT * FROM posts;', cb);

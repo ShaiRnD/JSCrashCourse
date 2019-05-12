@@ -15,4 +15,8 @@ function queryDB(queryStr, cb){
     });
 }
 
-module.exports = queryDB;
+function closeConnection(cb){
+    connection.end(err => cb(err));
+};
+
+module.exports = {queryDB, closeConnection};

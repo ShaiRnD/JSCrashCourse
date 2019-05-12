@@ -18,5 +18,6 @@ Continue the json-server exercise and replace the db.json file with a mysql data
 Use express router and create a different router for `posts` end points and `users` end points
 
 # Challanges
-* Using the `morgan` npm package. log every error on the server to a `server.log` file
+* Using the `morgan` npm package. log every failed request on the server to an `error.log` file
+* Make sure your db queries are injection proof
 * Replace the `mysql` package with `promise-mysql` and use promises instead of callbacks whenever possible
