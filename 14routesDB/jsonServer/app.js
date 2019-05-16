@@ -21,18 +21,22 @@ app.use('/users', users);
 
 const server = app.listen(port, () => console.log(`Listening on port ${port}!`));
 
-process.on('SIGTERM', handleSignalEnd);
-process.on('SIGINT', handleSignalEnd);
+process.on('SIGTERM', handleSignalEnd)
+        .on('SIGINT', handleSignalEnd);
 
+let onlyOnce = false;
 function handleSignalEnd(signal) {
     console.log(`Recieved ${signal} closing server`);
-    server.close(err => {
-        err && console.log(err);
-        console.log('Server closed');
-        closeConnection(err => {
+    if(!onlyOnce){
+        onlyOnce = true;
+        server.close(err => {
             err && console.log(err);
-            console.log('Mysql connection closed');
-            console.log(`Letting node exit on it's own...`);
+            console.log('Server closed');
+            closeConnection(err => {
+                err && console.log(err);
+                console.log('Mysql connection closed');
+                console.log(`Letting node exit on it's own...`);
+            });
         });
-    });
-}
+    }else console.log(`Recieved ${signal} second time`);
+};
