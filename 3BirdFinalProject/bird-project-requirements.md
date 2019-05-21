@@ -6,7 +6,7 @@ Create a Bird like app that allows users to rent out scooters
 
 * The project includes a client and a server
 * The client represent the scooter itself 
-* The server will service the scooter and users
+* The server will service the scooters and users
 
 ## Actions the client must support:
 * `register` - Registers a new scooter with the server
@@ -35,10 +35,10 @@ Create a Bird like app that allows users to rent out scooters
   * This should report to the server that the scooter was treated along with the time and location
 
 General:
-* Every command should sent the scooter id to the server and make sure it is registered there
+* Every command should send the scooter id to the server and make sure it is registered there
 * Trying to execute a command with an unidentified id will be noted by the server in `reports` table
 
-**Techical:** The client will be written in Node
+**Technical:** The client will be written in Node
 
 Here's an example of running a command
 ```cmd
