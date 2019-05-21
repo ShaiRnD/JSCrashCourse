@@ -46,23 +46,3 @@ function handleSignalEnd(signal) {
         });
     }else console.log(`Recieved ${signal} second time`);
 };
-
-// process.on('SIGTERM', handleSignalEnd)
-//         .on('SIGINT', handleSignalEnd);
-
-// let onlyOnce = false;
-// function handleSignalEnd(signal) {
-//     console.log(`Recieved ${signal} closing server`);
-//     if(!onlyOnce){
-//         onlyOnce = true;
-//         server.close(err => {
-//             err && console.log(err);
-//             console.log('Server closed');
-//             closeConnection(err => {
-//                 err && console.log(err);
-//                 console.log('Mysql connection closed');
-//                 console.log(`Letting node exit on it's own...`);
-//             });
-//         });
-//     }else console.log(`Recieved ${signal} second time`);
-// };
