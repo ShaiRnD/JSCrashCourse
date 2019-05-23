@@ -2,10 +2,20 @@
 
 ## Scooter
 ```http
-POST /scooters/register
+POST /scooters
 ```
 Registers a new scooter in the server. this scooter can now be rented
 * Response - The scooter id
+
+```http
+GET /scooters/:id
+```
+Returns the scooter details
+
+```http
+GET /scooters/:id/history
+```
+Returns the scooter's rent history
 
 ```http
 POST /scooters/:id/rent
@@ -36,24 +46,14 @@ Releases a scooter, allowing it to be rented again
 * Body parameters: userId
 * Response: status 200 or error
 
-```http
-GET /scooters/:id
-```
-Returns the scooter details
-
-```http
-GET /scooters/:id/history
-```
-Returns the scooter's rent history
-
 ## User
 
 ```http
-POST /users/signup
+POST /users/
 ```
 Signs up a user. only signed up users are able to rent a scooter
 
-* Request parameters: name, email, address
+* Request parameters: name, email, address, creditCardNumber
 * Response: the user id or error if email exists
 
 ```http
@@ -69,12 +69,12 @@ Returns the user's rent history
 # Database
 
 Tables:
-* scooters - id, totalKm, operational, lat, long, battery
-* treatments - id, scooterId, date, lat, long
-* users - id, name, address, creditCardNumber, balance, signupDate
-* payments - userId, sum, date
-* rents - userId, scooterId, startDate, endDate, startLat, endLat, startLong, endLong, distance
-* reports - id, battery, lat, long, date, command
+* scooter - id, total_km, operational, lat, long, battery
+* treatment - id, scooter_id, date, lat, long
+* user - id, name, email, address, credit_card_number, balance, signup_date
+* payment - user_id, sum, date
+* rent - id, user_id, scooter_id, start_date, end_date, start_lat, start_long, end_lat, end_long, distance
+* report - id, battery, lat, long, date, command
 
 Editors note - This design is a suggestion and may not answer all of the project's requirments, \
  but is a good base for summering this course. if you feel like implementing more requirments, by all means go ahead :)
