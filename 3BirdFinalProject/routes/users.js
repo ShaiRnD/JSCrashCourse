@@ -30,6 +30,8 @@ router.param('id', (req, res, next, userId) => {
     }).catch(next);
 });
 
+idRouter.get('/', (req, res) => res.send(req.user));
+
 idRouter.get('/history', (req, res, next) => {
     getAllUserRents(req.user.id)
         .then((rents) => {

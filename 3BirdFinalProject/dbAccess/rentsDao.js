@@ -43,6 +43,7 @@ function getAllScooterRents(scooterId){
         return results;
     });
 };
+
 function endRent(id, scooterLat, scooterLong){
     const endRentValues = { end_lat: scooterLat, end_long: scooterLong, end_date: new Date() };
     return queryDB(`UPDATE rent SET ? WHERE ?;`, [endRentValues, {id}]);
