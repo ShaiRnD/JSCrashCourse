@@ -1,7 +1,8 @@
 'use strict';
 const express = require('express');
-const {getUser,createUser} = require('../dbAccess/usersDao');
+const {getUser, createUser, getAllUserRents} = require('../dbAccess/usersDao');
 const router = express.Router();
+const idRouter = express.Router({mergeParams: true});
 
 router.post('/', (req, res, next) => {
     createUser(req.body)
@@ -14,28 +15,26 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.get('/:id', (req, res, next) => {
-    getUser(req.params.id)
+router.use('/:id', idRouter);
+
+router.param('id', (req, res, next, userId) => {
+    getUser(userId)
     .then(user => {
-        if (user) res.send(user)
-        else{
+        if (user){
+            req.user = user;
+            next();
+        }else{
             // todo alert to report table
-            res.status(404).send("Error: user not found");
-        } 
+            throw "Error: user not found";
+        }
     }).catch(next);
 });
 
-//todo when rent is done
-router.get('/:id/history', (req, res, next) => {
-
-    // getUser(req.params.id)
-    // .then(user => {
-    //     if (user) res.send(user)
-    //     else{
-    //         // todo alert to report table
-    //         res.status(404).send("Error: user not found");
-    //     } 
-    // }).catch(next);
+idRouter.get('/history', (req, res, next) => {
+    getAllUserRents(req.user.id)
+        .then((rents) => {
+            res.send(rents);
+        }).catch(next);
 });
 
 module.exports = router;

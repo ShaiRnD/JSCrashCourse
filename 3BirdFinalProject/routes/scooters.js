@@ -1,8 +1,8 @@
 'use strict';
 const express = require('express');
-const {getScooter,createScooter} = require('../dbAccess/scootersDao');
+const {getScooter, createScooter, updateScooterPosition} = require('../dbAccess/scootersDao');
 const {getUser} = require('../dbAccess/usersDao');
-const {startRent, isUserRentActive, isScooterRented, getAllRents} = require('../dbAccess/rentsDao');
+const {getActiveRentByScooterAndUser, startRent, isUserRentActive, isScooterRented, getAllScooterRents, endRent} = require('../dbAccess/rentsDao');
 const router = express.Router();
 const idRouter = express.Router({mergeParams: true});
 
@@ -31,7 +31,7 @@ router.param('id', (req, res, next, scooterId) => {
 idRouter.get('/', (req, res, next) => res.send(req.scooter));
 
 idRouter.get('/history', (req, res, next) => {
-    getAllRents(req.scooter.id)
+    getAllScooterRents(req.scooter.id)
         .then((rents) => {
             res.send(rents);
         }).catch(next);
@@ -57,28 +57,25 @@ idRouter.post('/rent', (req, res, next) => {
         }).catch(next);
 });
 
-idRouter.post('/position', (req, res, next) => {
-
-    // getUser(req.params.id)
-    // .then(user => {
-    //     if (user) res.send(user)
-    //     else{
-    //         // todo alert to report table
-    //         res.status(404).send("Error: user not found");
-    //     } 
-    // }).catch(next);
+idRouter.patch('/position', (req, res, next) => {
+    //todo later add total_km update for every position maybe return it aswell
+    const {lat, long, battery} = req.body;
+    updateScooterPosition(req.scooter.id, lat, long, battery)
+        .then(() => {
+            res.sendStatus(204);
+        }).catch(next);
 });
 
 idRouter.post('/release', (req, res, next) => {
-
-    // getUser(req.params.id)
-    // .then(user => {
-    //     if (user) res.send(user)
-    //     else{
-    //         // todo alert to report table
-    //         res.status(404).send("Error: user not found");
-    //     } 
-    // }).catch(next);
+    const {userId} = req.body;
+    const {scooter} = req;
+    getActiveRentByScooterAndUser(scooter.id, userId)
+    .then((rent) => {
+        if(!rent) throw "Error: No Active rent for this user and scooter"
+        return endRent(rent.id, scooter.lat, scooter.long);
+    }).then(() => {
+        res.sendStatus(200);
+    }).catch(next);
 });
 
 module.exports = router;

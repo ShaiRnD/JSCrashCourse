@@ -8,6 +8,13 @@ function getRent(rentId){
         });
 };
 
+function getActiveRentByScooterAndUser(scooterId, userId){
+    return queryDB(`SELECT * FROM rent WHERE scooter_id = ? AND user_id = ? AND end_date IS NULL;`, [scooterId, userId])
+        .then((results) => {
+            return results[0];
+        });
+};
+
 function startRent(userId, scooterId, startLat, startLong){
     const newRentValues = {user_id: userId, scooter_id: scooterId, start_date: new Date(), start_lat: startLat, start_long: startLong};
     return queryDB(`INSERT INTO rent set ?;`, newRentValues)
@@ -30,17 +37,23 @@ function isScooterRented(scooterId){
     });
 };
 
-function getAllRents(scooterId){
+function getAllScooterRents(scooterId){
     return queryDB(`SELECT * FROM rent WHERE scooter_id = ?;`, scooterId)
     .then((results) => {
         return results;
     });
-}
+};
+function endRent(id, scooterLat, scooterLong){
+    const endRentValues = { end_lat: scooterLat, end_long: scooterLong, end_date: new Date() };
+    return queryDB(`UPDATE rent SET ? WHERE ?;`, [endRentValues, {id}]);
+};
 
 module.exports = {
     getRent,
+    getActiveRentByScooterAndUser,
     startRent,
     isUserRentActive,
     isScooterRented,
-    getAllRents
+    getAllScooterRents, 
+    endRent
 };

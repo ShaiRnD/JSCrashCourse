@@ -15,7 +15,15 @@ function createUser({name, email, address, creditCardNumber}){
         });
 };
 
+function getAllUserRents(userId){
+    return queryDB(`SELECT * FROM rent WHERE user_id = ?;`, userId)
+    .then((results) => {
+        return results;
+    });
+};
+
 module.exports = {
     getUser,
     createUser,
+    getAllUserRents
 };

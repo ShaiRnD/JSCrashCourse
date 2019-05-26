@@ -31,12 +31,12 @@ Data:
 * Response - rentId or error message
 
 ```http
-POST /scooters/:id/position
+PATCH /scooters/:id/position
 ```
 Update the server with the scooter position
 
 * Body parameters: lat, long, battery
-* Response: status 200 or error
+* Response: status 204 or error
 
 ```http
 POST /scooters/:id/release

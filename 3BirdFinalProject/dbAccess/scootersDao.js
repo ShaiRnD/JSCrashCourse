@@ -16,7 +16,13 @@ function createScooter(){
         });
 };
 
+function updateScooterPosition(id, lat, long, battery){
+    const valuesToUpdate = {lat, long, battery};
+    return queryDB(`UPDATE scooter set ? WHERE ?;`, [valuesToUpdate, {id}]);
+};
+
 module.exports = {
     getScooter,
     createScooter,
+    updateScooterPosition
 };
