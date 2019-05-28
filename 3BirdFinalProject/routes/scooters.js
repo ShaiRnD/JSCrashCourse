@@ -4,6 +4,7 @@ const {getScooter, createScooter, updateScooterPosition, makeScooterOperational,
 const {getUser} = require('../dbAccess/usersDao');
 const {getActiveRentByScooterAndUser, startRent, isUserRentActive, isScooterRented, getAllScooterRents, endRent} = require('../dbAccess/rentsDao');
 const {createTreatment} = require('../dbAccess/treatmentDao')
+const {createReport} = require('../dbAccess/reportsDao')
 const router = express.Router();
 const idRouter = express.Router({mergeParams: true});
 
@@ -20,11 +21,17 @@ router.param('id', (req, res, next, scooterId) => {
     getScooter(scooterId)
     .then(scooter => {
         if (scooter){
-            req.scooter = scooter;
-            next();
+            const {battery, lat, long}  = req.body;
+            return createReport(scooterId, battery, lat, long, new Date(), `Command: ${req.originalUrl}`)
+            .then(() => {
+                req.scooter = scooter;
+                next();
+            });
         }else{
-            // todo alert to report table
-            throw "Error: scooter not found";
+            return createReport(scooterId, null, null, null, new Date(), `Command: ${req.originalUrl}, scooter_Id doesn't exist!`)
+            .then(() => {
+                throw "Error: scooter not found";
+            });
         }
     }).catch(next);
 });
@@ -44,7 +51,6 @@ idRouter.post('/rent', (req, res, next) => {
     Promise.all([getUser(userId), isUserRentActive(userId), isScooterRented(scooter.id)])
         .then(([user, userHasActiveRent, scooterRented]) => {
             if(!user){
-                // todo alert to report table
                 throw "Error: User doesn't exist";
             }
             if(scooterRented) throw "Error: Scooter already in use";

@@ -36,7 +36,7 @@ Create a Bird like app that allows users to rent out scooters
 
 General:
 * Every command should send the scooter id to the server and make sure it is registered there
-* Trying to execute a command with an unidentified id will be noted by the server in `reports` table
+* Trying to execute a command with an unidentified id will be noted by the server in `report` table
 
 **Technical:** The client will be written in Node
 

@@ -24,7 +24,6 @@ router.param('id', (req, res, next, userId) => {
             req.user = user;
             next();
         }else{
-            // todo alert to report table
             throw "Error: user not found";
         }
     }).catch(next);

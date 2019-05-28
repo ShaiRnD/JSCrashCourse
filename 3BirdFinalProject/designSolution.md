@@ -74,7 +74,7 @@ Tables:
 * user - id, name, email, address, credit_card_number, balance, signup_date
 * payment - user_id, sum, date
 * rent - id, user_id, scooter_id, start_date, end_date, start_lat, start_long, end_lat, end_long, distance
-* report - id, battery, lat, long, date, command
+* report - scooter_id, battery, lat, long, date, command
 
 Editors note - This design is a suggestion and may not answer all of the project's requirments, \
  but is a good base for summering this course. if you feel like implementing more requirments, by all means go ahead :)
