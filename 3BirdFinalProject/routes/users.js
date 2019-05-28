@@ -1,6 +1,6 @@
 'use strict';
 const express = require('express');
-const {getUser, createUser, getAllUserRents} = require('../dbAccess/usersDao');
+const {getUser, createUser, getAllUserRents, changeUserBalance} = require('../dbAccess/usersDao');
 const router = express.Router();
 const idRouter = express.Router({mergeParams: true});
 
@@ -36,6 +36,19 @@ idRouter.get('/history', (req, res, next) => {
         .then((rents) => {
             res.send(rents);
         }).catch(next);
+});
+
+idRouter.get('/getMonthlyBill', (req, res, next) => {
+    const leftToPay = req.user.balance;
+    res.send({leftToPay});
+});
+
+idRouter.patch('/pay', (req, res, next) => {
+    const {payment} = req.body;
+    changeUserBalance(req.user.id, 0 - payment)
+    .then(() => {
+        res.sendStatus(204);
+    });
 });
 
 module.exports = router;

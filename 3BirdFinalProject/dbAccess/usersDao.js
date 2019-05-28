@@ -15,6 +15,7 @@ function createUser({name, email, address, creditCardNumber}){
         });
 };
 
+//todo put in rents
 function getAllUserRents(userId){
     return queryDB(`SELECT * FROM rent WHERE user_id = ?;`, userId)
     .then((results) => {
@@ -22,8 +23,18 @@ function getAllUserRents(userId){
     });
 };
 
+function changeUserBalance(id, changeBy){
+    return queryDB(`SELECT * FROM user WHERE ?;`, {id})
+    .then(([user]) => {
+        return user.balance;
+    }).then((balance) => {
+        return queryDB(`UPDATE user SET ? WHERE ?`, [{balance: (balance + changeBy)}, {id}]);
+    })
+};
+
 module.exports = {
     getUser,
     createUser,
-    getAllUserRents
+    getAllUserRents,
+    changeUserBalance
 };

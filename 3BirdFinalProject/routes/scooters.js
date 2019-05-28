@@ -1,8 +1,8 @@
 'use strict';
 const express = require('express');
-const {getScooter, createScooter, updateScooterPosition, makeScooterOperational, makeScooterNotOperational} = require('../dbAccess/scootersDao');
-const {getUser} = require('../dbAccess/usersDao');
-const {getActiveRentByScooterAndUser, startRent, isUserRentActive, isScooterRented, getAllScooterRents, endRent} = require('../dbAccess/rentsDao');
+const {getScooter, createScooter, updateScooterPosition, makeScooterOperational, makeScooterNotOperational, updateBatteryStatus} = require('../dbAccess/scootersDao');
+const {getUser, changeUserBalance} = require('../dbAccess/usersDao');
+const {getActiveRentByScooterAndUser, startRent, isUserRentActive, isScooterRented, getAllScooterRents, endRent, getRent} = require('../dbAccess/rentsDao');
 const {createTreatment} = require('../dbAccess/treatmentDao')
 const {createReport} = require('../dbAccess/reportsDao')
 const router = express.Router();
@@ -80,8 +80,16 @@ idRouter.post('/release', (req, res, next) => {
     .then((rent) => {
         if(!rent) throw "Error: No Active rent for this user and scooter"
         return endRent(rent, scooter.lat, scooter.long);
-    }).then(() => {
-        return getScooter(scooter.id);
+    }).then((rentId) => {
+        return Promise.all([getScooter(scooter.id), getRent(rentId)])
+        .then(([scooter, rent]) => {
+            const minutesOfRide = (rent.end_date - rent.start_date) / 1000 / 60;
+            const costOfRide = 10 + minutesOfRide;
+            return changeUserBalance(userId, costOfRide)
+            .then(() => {
+                return getScooter(scooter.id);
+            })
+        });
     }).then(scooter => {
         if(scooter.total_km <= 0) return makeScooterNotOperational(scooter.id)
         return;
@@ -96,6 +104,15 @@ idRouter.post('/maintenance', (req, res, next) => {
         .then(() => {
             res.sendStatus(204);
         }).catch(next);
+});
+
+idRouter.post('/reportCharge', (req, res, next) => {
+    const {battery, userId} = req.body;
+    const chargeReward = req.scooter.battery - battery; // negative on puprose
+    Promise.all([changeUserBalance(userId, chargeReward), updateBatteryStatus(req.scooter.id, battery)])
+    .then(() => {
+        res.sendStatus(204);
+    }).catch(next);
 });
 
 

@@ -47,7 +47,11 @@ function getAllScooterRents(scooterId){
 function endRent(rent, endLat, endLong){
     const distance = Math.sqrt((endLat - rent.start_lat) ** 2 + (endLong - rent.start_long) ** 2);
     const endRentValues = {end_lat: endLat, end_long: endLong, end_date: new Date(), distance};
-    return queryDB(`UPDATE rent SET ? WHERE ?;`, [endRentValues, {id: rent.id}]);
+    return queryDB(`UPDATE rent SET ? WHERE ?;`, [endRentValues, {id: rent.id}])
+        .then(() => {
+            return rent.id;
+        });
+
 };
 
 module.exports = {

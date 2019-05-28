@@ -33,10 +33,16 @@ function makeScooterNotOperational(id){
     return queryDB(`UPDATE scooter set ? WHERE ?;`, [valuesToUpdate, {id}]);
 };
 
+function updateBatteryStatus(id, battery){
+    const valuesToUpdate = {battery};
+    return queryDB(`UPDATE scooter set ? WHERE ?;`, [valuesToUpdate, {id}]);
+}
+
 module.exports = {
     getScooter,
     createScooter,
     updateScooterPosition,
     makeScooterOperational,
-    makeScooterNotOperational
+    makeScooterNotOperational,
+    updateBatteryStatus 
 };
