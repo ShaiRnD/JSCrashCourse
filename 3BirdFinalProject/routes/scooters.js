@@ -1,8 +1,9 @@
 'use strict';
 const express = require('express');
-const {getScooter, createScooter, updateScooterPosition} = require('../dbAccess/scootersDao');
+const {getScooter, createScooter, updateScooterPosition, makeScooterOperational, makeScooterNotOperational} = require('../dbAccess/scootersDao');
 const {getUser} = require('../dbAccess/usersDao');
 const {getActiveRentByScooterAndUser, startRent, isUserRentActive, isScooterRented, getAllScooterRents, endRent} = require('../dbAccess/rentsDao');
+const {createTreatment} = require('../dbAccess/treatmentDao')
 const router = express.Router();
 const idRouter = express.Router({mergeParams: true});
 
@@ -58,9 +59,9 @@ idRouter.post('/rent', (req, res, next) => {
 });
 
 idRouter.patch('/position', (req, res, next) => {
-    //todo later add total_km update for every position maybe return it aswell
+    // maybe return total_km
     const {lat, long, battery} = req.body;
-    updateScooterPosition(req.scooter.id, lat, long, battery)
+    updateScooterPosition(req.scooter, lat, long, battery)
         .then(() => {
             res.sendStatus(204);
         }).catch(next);
@@ -72,10 +73,25 @@ idRouter.post('/release', (req, res, next) => {
     getActiveRentByScooterAndUser(scooter.id, userId)
     .then((rent) => {
         if(!rent) throw "Error: No Active rent for this user and scooter"
-        return endRent(rent.id, scooter.lat, scooter.long);
+        return endRent(rent, scooter.lat, scooter.long);
+    }).then(() => {
+        return getScooter(scooter.id);
+    }).then(scooter => {
+        if(scooter.total_km <= 0) return makeScooterNotOperational(scooter.id)
+        return;
     }).then(() => {
         res.sendStatus(200);
     }).catch(next);
 });
+
+idRouter.post('/maintenance', (req, res, next) => {
+    const {date, lat, long} = req.body;
+    Promise.all([createTreatment(req.scooter.id, new Date(date), lat, long), makeScooterOperational(req.scooter.id)])
+        .then(() => {
+            res.sendStatus(204);
+        }).catch(next);
+});
+
+
 
 module.exports = router;
