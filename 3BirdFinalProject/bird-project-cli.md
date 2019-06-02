@@ -2,7 +2,7 @@
 
 starting with register
 ```
-~ $ python3 bird
+~ $ node birdClient
 bird> register
 New bird scooter registered (scooterID: 12345)
 
@@ -12,7 +12,7 @@ bird was rented by user 5.
 bird-12345-5> release
 bird was released.
 
-bird-121345> rent 6
+bird-12345> rent 6
 Failed! user does not exist.
 
 bird-12345> rent 4
@@ -28,7 +28,7 @@ location 50:13 battery:88% totalKm: 952km
 location 80:20 battery:87% totalKm: 951km
 
 bird-12345-4> release
-scooter released
+bird was released
 
 bird-12345> charge 5
 scooter is being charged by user 5
@@ -52,7 +52,7 @@ bird-12345> exit
 
 start without register
 ```
-~ $ python3 bird
+~ $ node birdClient
 bird> start 12345
 bird-12345> rent 3
 bird-12345-3> release

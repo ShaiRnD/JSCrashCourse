@@ -64,12 +64,12 @@ idRouter.post('/rent', (req, res, next) => {
         }).catch(next);
 });
 
-idRouter.patch('/position', (req, res, next) => {
+idRouter.post('/position', (req, res, next) => {
     // maybe return total_km
     const {lat, long, battery} = req.body;
     updateScooterPosition(req.scooter, lat, long, battery)
         .then(() => {
-            res.sendStatus(204);
+            res.status(200).send({});
         }).catch(next);
 });
 
@@ -94,7 +94,7 @@ idRouter.post('/release', (req, res, next) => {
         if(scooter.total_km <= 0) return makeScooterNotOperational(scooter.id)
         return;
     }).then(() => {
-        res.sendStatus(200);
+        res.status(200).send({});
     }).catch(next);
 });
 

@@ -31,7 +31,7 @@ Data:
 * Response - rentId or error message
 
 ```http
-PATCH /scooters/:id/position
+POST /scooters/:id/position
 ```
 Update the server with the scooter position
 
