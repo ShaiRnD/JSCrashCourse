@@ -38,5 +38,3 @@ Assignments and example solutions are included as well... Enjoy :)
 ## Acknowledgement
 
 Thanks to [@gabimor](https://github.com/gabimor) who was the main lecturer in this course and gave permission to share it with the world
-
-p.s: I was an instructor in this course
