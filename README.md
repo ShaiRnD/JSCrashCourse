@@ -5,7 +5,7 @@ This course main object is to take a person who has basic understanding of progr
 Such concepts include - Servers, Http requests, Data bases, Version Control, Functional Programming \
 All of this using JavaScript
 
-It includes the following subjects(And more):
+It includes the following subjects(and more):
 1. Basic JS:
     * Primitives
     * Arrays and Strings
